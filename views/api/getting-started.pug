@@ -1,0 +1,67 @@
+extend ../templete.pug
+
+block title
+    title Getting Started - Pug
+
+block content
+    h1 Getting Started
+
+    +subHead(`Installation`)
+    p Pug is available via #[a(href="https://www.npmjs.com/") npm]:
+    pre.cm-s-default
+        code
+            | #[span.cm-def $ npm] install pug
+
+    +subHead(`Overview`)
+    p 
+        | The general rendering process of Pug is simple. 
+        code
+            | #[a(href="reference") pug.compile()]
+        |  will compile the Pug source code into a JavaScript function that takes a data object (called “#[code locals]”) as an argument. 
+        | Call that resultant function with your data, and #[em voilà!], it will return a string of HTML rendered with your data.
+
+    p The compiled function can be re-used, and called with different sets of data.
+
+    pre.cm-s-default
+        code
+            | #[span.cm-comment //- template.pug]
+            | #[span.cm-tag p] #[span.cm-string #{"#{name}"}'s Pug source code!]
+
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword const] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-comment // Compile the source code]
+            | #[span.cm-keyword const] #[span.cm-def compiledFunction] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property compileFile](#[span.cm-string 'template.pug']);
+            | 
+            | #[span.cm-comment // Render a set of data]
+            | #[span.cm-variable console].#[span.cm-property log](#[span.cm-variable compiledFunction]({
+            |   #[span.cm-property name]: #[span.cm-string 'Timothy']
+            | }));
+            | #[span.cm-comment // "#{"<p>"}Timothy's Pug source code!#{"</p>"}"]
+            |
+            | #[span.cm-comment // Render another set of data]
+            | #[span.cm-variable console].#[span.cm-property log](#[span.cm-variable compiledFunction]({
+            |   #[span.cm-property name]: #[span.cm-string 'Forbes']
+            | }));
+            | #[span.cm-comment // "#{"<p>"}Forbes's Pug source code!#{"</p>"}"]
+
+    p 
+        | Pug also provides the 
+        code #[a(href="reference#pugrendersource-options-callback") pug.render()]
+        |  family of functions that combine compiling and rendering into one step.
+        | However, the template function will be re-compiled every time #[code render] is called, which might impact performance. 
+        | Alternatively, you can use the 
+        code #[a(href="reference#options-cache") cache]
+        |  option with #[code render], which will automatically store the compiled function into an internal cache.
+    
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword const] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-comment // Compile template.pug, and render a set of data]
+            | #[span.cm-variable console].#[span.cm-property log](#[span.cm-variable pug].#[span.cm-property renderFile](#[span.cm-string 'template.pug'], {
+            |   #[span.cm-property name]: #[span.cm-string 'Timothy']
+            | }));
+            | #[span.cm-comment // "#{"<p>"}Timothy's Pug source code!#{"</p>"}"]
+    

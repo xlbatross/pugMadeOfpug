@@ -1,0 +1,43 @@
+mixin subHead(name)
+    - var urlName = name.toLowerCase().replace(' ', '-');
+    h2.subHead(id= urlName)= name + ` `
+        a.header-anchor(href=`#${urlName}`, aria-hidden=`true`) ¶
+
+html(lang=`en`)
+    head
+        meta(charset=`utf-8`)
+        meta(name=`viewport`, content=`width=device-width, initial-scale=1.0`)
+        meta(name=`msapplication-config`, content=`../images/browserconfig.xml`)
+        meta(name=`theme-color`, content=`#ffffff`)
+        link(rel=`apple-touch-icon`, sizes=`180x180`, href=`../images/apple-touch-icon.png`)
+        link(rel=`icon`, type=`image/png`, sizes=`32x32`, href=`../images/favicon-32x32.png`)
+        link(rel=`icon`, type=`image/png`, sizes=`16x16`, href=`../images/favicon-16x16.png`)
+        link(rel=`manifest`, href=`../images/manifest.json`)
+        link(rel=`mask-icon`, href=`../images/safari-pinned-tab.svg`, color=`#5bbad5`)
+        link(rel=`shortcut icon`, href=`../images/favicon.ico`)
+        link(rel=`stylesheet`, href=`https://fonts.googleapis.com/css?family=Arvo:400,400italic,700,700italic|PT+Sans:400,400italic,700,700italic`)
+        link(rel=`stylesheet`, href=`../css/style.css`)
+        block title
+    body
+        // toggle navigation bar
+        aside.menu.outside
+            a.toggle
+                img(src=`../images/menu-tab.svg`)
+            include nav.pug
+        // header
+        nav.navbar.navbar-full.navbar-dark.bg-primary
+            div.container
+                a.navbar-brand(href=`/`) pug
+                ul.nav.navbar-nav
+                    li.nav-item
+                        a.nav-link.active(href=`/`) Docs
+                    li.nav-item
+                        a.nav-link(href=`https://github.com/pugjs/pug`) GitHub
+        div.container
+            // navigation bar
+            nav.menu.inside
+                include nav.pug
+            // content
+            article.main
+                block content
+            script(src=`../js/generic.js`)

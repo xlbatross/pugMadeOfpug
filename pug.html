@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/manifest.json">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+  <link rel="shortcut icon" href="/images/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo:400,400italic,700,700italic|PT+Sans:400,400italic,700,700italic">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Getting Started &ndash; Pug</title>
+</head>
+<body>
+  <aside class="menu outside">
+    <!-- CSS gurus requested-->
+    <a class="toggle"><img src="/images/menu-tab.svg"></a>
+    <!-- nav placeholder-->
+    <nav class="nav nav-pills nav-stacked">
+      <div class="advert"></div>
+      <a class="nav-link">API</a>
+      <ul class="nav nav-pills nav-stacked">
+        <a class="nav-link active" href="getting-started.html">Getting Started</a>
+        <a class="nav-link" href="express.html">Express Integration</a>
+        <a class="nav-link" href="reference.html">Reference</a>
+        <a class="nav-link" href="migration-v2.html">Migrating to Pug 2</a>
+        <a class="nav-link" href="migration-v3.html">Migrating to Pug 3</a>
+        <a class="nav-link" href="https://github.com/pugjs/babel-plugin-transform-react-pug">React Integration</a>
+      </ul>
+      <a class="nav-link">Language Reference</a>
+      <ul class="nav nav-pills nav-stacked">
+        <a class="nav-link" href="../language/attributes.html">Attributes</a>
+        <a class="nav-link" href="../language/case.html">Case</a>
+        <a class="nav-link" href="../language/code.html">Code</a>
+        <a class="nav-link" href="../language/comments.html">Comments</a>
+        <a class="nav-link" href="../language/conditionals.html">Conditionals</a>
+        <a class="nav-link" href="../language/doctype.html">Doctype</a>
+        <a class="nav-link" href="../language/filters.html">Filters</a>
+        <a class="nav-link" href="../language/includes.html">Includes</a>
+        <a class="nav-link" href="../language/inheritance.html">Inheritance: Extends and Block</a>
+        <a class="nav-link" href="../language/interpolation.html">Interpolation</a>
+        <a class="nav-link" href="../language/iteration.html">Iteration</a>
+        <a class="nav-link" href="../language/mixins.html">Mixins</a>
+        <a class="nav-link" href="../language/plain-text.html">Plain Text</a>
+        <a class="nav-link" href="../language/tags.html">Tags</a>
+      </ul>
+      <a class="nav-link">Support</a>
+      <ul class="nav nav-pills nav-stacked">
+        <a class="nav-link" href="../support/community.html">Community Support</a>
+        <a class="nav-link" href="../support/enterprise.html">Enterprise Support</a>
+      </ul>
+      <div class="nav-link">Sponsor
+        <a class="sponsor" href="https://www.coinnewsspan.com/">coin news</a>
+        <a class="sponsor" href="https://opencollective.com/pug/sponsor/0/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/0/avatar.svg" height="64"></a>
+        <a class="sponsor" href="https://opencollective.com/pug/sponsor/1/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/1/avatar.svg" height="64"></a>
+        <a class="sponsor" href="https://opencollective.com/pug/sponsor/2/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/2/avatar.svg" height="64"></a>
+        <a class="sponsor" href="https://opencollective.com/pug/sponsor/3/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/3/avatar.svg" height="64"></a>
+        <a class="sponsor" href="https://opencollective.com/pug/sponsor/4/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/4/avatar.svg" height="64"></a>
+      </div>
+    </nav>
+  </aside>
+  <nav class="navbar navbar-full navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="/">pug</a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="getting-started.html">Docs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/pugjs/pug">GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <nav class="menu inside">
+      <!-- nav placeholder-->
+      <nav class="nav nav-pills nav-stacked">
+        <div class="advert"></div>
+        <a class="nav-link">API</a>
+        <ul class="nav nav-pills nav-stacked">
+          <a class="nav-link active" href="getting-started.html">Getting Started</a>
+          <a class="nav-link" href="express.html">Express Integration</a>
+          <a class="nav-link" href="reference.html">Reference</a>
+          <a class="nav-link" href="migration-v2.html">Migrating to Pug 2</a>
+          <a class="nav-link" href="migration-v3.html">Migrating to Pug 3</a>
+          <a class="nav-link" href="https://github.com/pugjs/babel-plugin-transform-react-pug">React Integration</a>
+        </ul>
+        <a class="nav-link">Language Reference</a>
+        <ul class="nav nav-pills nav-stacked">
+          <a class="nav-link" href="../language/attributes.html">Attributes</a>
+          <a class="nav-link" href="../language/case.html">Case</a>
+          <a class="nav-link" href="../language/code.html">Code</a>
+          <a class="nav-link" href="../language/comments.html">Comments</a>
+          <a class="nav-link" href="../language/conditionals.html">Conditionals</a>
+          <a class="nav-link" href="../language/doctype.html">Doctype</a>
+          <a class="nav-link" href="../language/filters.html">Filters</a>
+          <a class="nav-link" href="../language/includes.html">Includes</a>
+          <a class="nav-link" href="../language/inheritance.html">Inheritance: Extends and Block</a>
+          <a class="nav-link" href="../language/interpolation.html">Interpolation</a>
+          <a class="nav-link" href="../language/iteration.html">Iteration</a>
+          <a class="nav-link" href="../language/mixins.html">Mixins</a>
+          <a class="nav-link" href="../language/plain-text.html">Plain Text</a>
+          <a class="nav-link" href="../language/tags.html">Tags</a>
+        </ul>
+        <a class="nav-link">Support</a>
+        <ul class="nav nav-pills nav-stacked">
+          <a class="nav-link" href="../support/community.html">Community Support</a>
+          <a class="nav-link" href="../support/enterprise.html">Enterprise Support</a>
+        </ul>
+        <div class="nav-link">Sponsors
+          <a class="sponsor" href="https://www.coinnewsspan.com/">coin news</a>
+          <a class="sponsor" href="https://opencollective.com/pug/sponsor/0/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/0/avatar.svg" height="64"></a>
+          <a class="sponsor" href="https://opencollective.com/pug/sponsor/1/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/1/avatar.svg" height="64"></a>
+          <a class="sponsor" href="https://opencollective.com/pug/sponsor/2/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/2/avatar.svg" height="64"></a>
+          <a class="sponsor" href="https://opencollective.com/pug/sponsor/3/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/3/avatar.svg" height="64"></a>
+          <a class="sponsor" href="https://opencollective.com/pug/sponsor/4/website" target="_blank"><img src="https://opencollective.com/pug/sponsor/4/avatar.svg" height="64"></a>
+        </div>
+      </nav>
+    </nav>
+    <article class="main">
+      <h1>Getting Started</h1>
+      
+      <h2 id="installation">Installation <a class="header-anchor" href="#installation" aria-hidden="true">¶</a></h2>
+
+      <p>Pug is available via <a href="https://www.npmjs.com/">npm</a>:</p>
+      <pre class="cm-s-default">
+        <code>
+          <span class="cm-def">$ npm</span> 
+          install pug
+        </code>
+      </pre>
+
+      <h2 id="overview">Overview <a class="header-anchor" href="#overview" aria-hidden="true">¶</a></h2>
+      <p>The general rendering process of Pug is simple. 
+        <code><a href="reference.html#pugcompilesource-options">pug.compile()</a></code> 
+        will compile the Pug source code into a JavaScript function that takes a data object 
+        (called “<code>locals</code>”) as an argument. Call that resultant function with your data,
+         and <em>voilà!</em>, it will return a string of HTML rendered with your data.
+      </p>
+      <p>The compiled function can be re-used, and called with different sets of data.</p>
+      <pre class="cm-s-default">
+        <code>
+          <span class="cm-comment">//- template.pug</span>
+          <span class="cm-tag">p</span>
+          <span class="cm-string"> #{name}'s Pug source code!</span>
+        </code>
+      </pre>
+      <pre class="cm-s-default">
+        <code>
+          <span class="cm-keyword">const</span>
+          <span class="cm-def">pug</span>
+          <span class="cm-operator">=</span>
+          <span class="cm-variable">require</span>
+          (<span class="cm-string">'pug'</span>);
+
+          <span class="cm-comment">// Compile the source code</span>
+          <span class="cm-keyword">const</span> 
+          <span class="cm-def">compiledFunction</span>
+          <span class="cm-operator">=</span> 
+          <span class="cm-variable">pug</span>.
+          <span class="cm-property">compileFile</span>
+          (<span class="cm-string">'template.pug'</span>);
+
+          <span class="cm-comment">// Render a set of data</span>
+          <span class="cm-variable">console</span>.
+          <span class="cm-property">log</span>
+          (<span class="cm-variable">compiledFunction</span>
+          ({<span class="cm-property">name</span>: 
+          <span class="cm-string">'Timothy'</span>}));
+          
+          <span class="cm-comment">// &quot;&lt;p&gt;Timothy's Pug source code!&lt;/p&gt;&quot;</span>
+
+<span class="cm-comment">// Render another set of data</span>
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">compiledFunction</span>({
+  <span class="cm-property">name</span>: <span class="cm-string">'Forbes'</span>
+}));
+<span class="cm-comment">// &quot;&lt;p&gt;Forbes's Pug source code!&lt;/p&gt;&quot;</span>
+</code></pre>
+<p>Pug also provides the <code><a href="reference.html#pugrendersource-options-callback">pug.render()</a></code> family of functions that combine compiling and rendering into one step. However, the template function will be re-compiled every time <code>render</code> is called, which might impact performance. Alternatively, you can use the <code><a href="reference.html#options-cache">cache</a></code> option with <code>render</code>, which will automatically store the compiled function into an internal cache.</p>
+<pre class="cm-s-default"><code><span class="cm-keyword">const</span> <span class="cm-def">pug</span> <span class="cm-operator">=</span> <span class="cm-variable">require</span>(<span class="cm-string">'pug'</span>);
+
+<span class="cm-comment">// Compile template.pug, and render a set of data</span>
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">pug</span>.<span class="cm-property">renderFile</span>(<span class="cm-string">'template.pug'</span>, {
+  <span class="cm-property">name</span>: <span class="cm-string">'Timothy'</span>
+}));
+<span class="cm-comment">// &quot;&lt;p&gt;Timothy's Pug source code!&lt;/p&gt;&quot;</span>
+</code></pre>
+<div style="margin-top: 50px">
+  <div class="AW-Form-692213006"></div>
+  </div>
+</article>
+</div>
+<script src="/js/pug.js"></script>
+<script src="/js/generic.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})
+  (window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-31798041-9', 'auto');
+  ga('send', 'pageview');
+</script>
+</body></html>

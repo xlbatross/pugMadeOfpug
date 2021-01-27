@@ -1,0 +1,23 @@
+extend ../templete.pug
+
+block title
+    title Express Integration - Pug
+
+block content
+    h1 Express Integration
+
+    p 
+        | Pug fully integrates with #[a(href="https://expressjs.com") Express], a popular Node.js web framework, as a supported view engine. 
+        | Check out Express's excellent #[a(href="https://expressjs.com/en/guide/using-template-engines.html") guide] for how to integrate Pug with Express.
+
+    +subHead(`Production Defaults`)
+    p
+        | In Express, the environmental variable #[code NODE_ENV] is designed to inform the web application of the execution environment:
+        |  whether it is in development or in production. Express and Pug automatically modify the defaults of a few options in production environment,
+        | to provide a better out-of-the-box experience for users.
+    
+    p
+        | Specifically, when #[code process.env.NODE_ENV] is set to #[code 'production'],
+        | and Pug is used with Express, the 
+        code #[a(href="reference#options") compileDebug]
+        |  option is #[code false] by default, while the #[code cache] option is #[code true].

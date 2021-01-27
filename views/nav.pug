@@ -1,0 +1,14 @@
+mixin navList(data)
+    each ct, ctIndex in navData.category
+        a.nav-link= navData.categoryText[ctIndex]
+        each at, atIndex in navData.article[ctIndex]
+            ul.nav.nav-pills.nav-stacked
+                if at == article
+                    a.nav-link.active(href=`/${ct}/${at}`)= navData.articleText[ctIndex][atIndex]
+                else
+                    a.nav-link(href=`/${ct}/${at}`)= navData.articleText[ctIndex][atIndex]
+                
+nav.nav.nav-pills.nav-stacked
+    div.advert
+    +navList(navData)
+    include sponsor.pug

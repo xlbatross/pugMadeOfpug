@@ -1,0 +1,14 @@
+{
+    "category" : ["api", "language", "support"],
+    "categoryText" : ["API", "Language Reference", "Support"],
+    "article" : [
+      ["getting-started", "express", "reference", "migration-v2", "migration-v3", "react-integration"],
+      ["attributes", "case", "code", "comments", "conditionals", "doctype", "filters", "includes", "inheritance", "interpolation", "iteration", "mixins", "plain-text", "tags"],
+      ["community", "enterprise"]
+    ], 
+    "articleText" : [
+      ["Getting Started", "Express Integration", "Reference", "Migrating to Pug 2", "Migrating to Pug 3", "React Integration"],
+      ["Attributes", "Case", "Code", "Comments", "Conditionals", "Doctype", "Filters", "Includes", "Inheritance: Extends and Block", "Interpolation", "Iteration", "Mixin", "Plain Text", "Tags"],
+      ["Community Support", "Enterprise Support"]
+    ]
+  }
