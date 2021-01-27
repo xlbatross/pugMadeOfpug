@@ -1,7 +1,267 @@
 extend ../templete.pug
 
+mixin methodName(name)
+    - var urlName = name.toLowerCase().replace(/[\(\)\.\,' ']/g, '').replace(/\?/g, '-');
+    h3.subHead(id= urlName)= name + ` `
+        a.header-anchor(href=`#${urlName}`, aria-hidden=`true`) ¶
+
 block title
-    title Reference - pug
+    title API Reference - pug
 
 block content
-    h1 Reference
+    h1 API Reference
+
+    p This page details how to render Pug using the JavaScript API.
+    div.alert.alert-info
+        h6 Tip
+        p
+            strong Pug is available in your Web browser's console!
+            |  To test drive Pug's API, as documented on this page, try entering:
+            pre.cm-s-default
+                code #[span.cm-variable pug].#[span.cm-property render](#[span.cm-string 'p Hello world!']);
+
+    +subHead('Options')
+    p All API methods accept the following set of options:
+    dl.parameter-list
+        dt filename#[span.type : string]
+        dd.description 
+            | The name of the file being complied. Used in exceptions, and required for relative #[code include]\s and #[code extend]\s. 
+            | Defaults to #[code 'Pug'].
+        dt basedir#[span.type : string]
+        dd.description 
+            | The root directory of all absolute inclusion.
+        dt doctype#[span.type : string]
+        dd.description 
+            | If the #[code doctype] is not specified as part of the template, you can specify it here. 
+            | It is sometimes useful to get self-closing tags and remove mirroring of boolean attributes. 
+            | See #[a(href="../lauguage/doctype#doctype-option") doctype documentation] for more information.
+        dt pretty#[span.type : boolean | string]
+        dd.description 
+            | [Deprecated.] Adds whitespace to the resulting HTML to make it easier for a human to read using #[code '  '] as indentation. 
+            | If a string is specified, that will be used as indentation instead (e.g. #[code '\t']). 
+            | We strongly recommend against using this option. Too often, it creates subtle bugs in your templates because of the way it alters the interpretation and rendering of whitespace, 
+            | and so this feature is going to be removed. Defaults to #[code false].
+        dt filters#[span.type : object]
+        dd.description 
+            | Hash table of #[a(href="../language/filters#custom-filters") custom filters]. Defaults to #[code undefined].
+        dt self#[span.type : boolean]
+        dd.description 
+            | Use a #[code self] namespace to hold the locals. It will speed up the compilation, 
+            | but instead of writing #[code variable] you will have to write #[code self.variable] to access a property of the locals object. 
+            | Defaults to #[code false].
+        dt debug#[span.type : boolean]
+        dd.description 
+            | If set to #[code true], the tokens and function body are logged to stdout.
+        dt compileDebug#[span.type : boolean]
+        dd.description 
+            | If set to #[code true], the function source will be included in the compiled template for better error messages (sometimes useful in development). 
+            | It is enabled by default, unless used with #[a(href="https://expressjs.com/") Express] in production mode.
+        dt globals#[span.type : Array#{"<string>"}]
+        dd.description 
+            | Add a list of global names to make accessible in templates.
+        dt cache#[span.type : boolean]
+        dd.description 
+            | If set to #[code true], compiled functions are cached. #[code filename] must be set as the cache key. 
+            | Only applies to #[code render] functions. Defaults to #[code false].
+        dt inlineRuntimeFunctions#[span.type : boolean]
+        dd.description 
+            | Inline runtime functions instead of #[code require]-ing them from a shared version. 
+            | For #[code compileClient] functions, the default is #[code true] (so that one does not have to include the runtime). 
+            | For all other compilation or rendering types, the default is #[code false].
+        dt name#[span.type : string]
+        dd.description 
+            | The name of the template function. Only applies to #[code compileClient] functions. Defaults to #[code 'template'].
+
+    +subHead('Methods')
+    +methodName('pug.compile(source, ?options)')
+    p Compile a Pug template to a function, which can be rendered multiple times with different locals.
+    dl.parameter-list
+        dt source#[span.type : string]
+        dd.description The source Pug template to compile
+        dt options#[span.type : ?options]
+        dd.description An options object
+    dl.parameter-list.returns
+        dt returns#[span.type : function]
+        dd.description A function to generate the HTML from an object containing locals
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword var] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-comment // Complie a function]
+            | #[span.cm-keyword var] #[span.cm-def fn] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property compile](#[span.cm-string 'string of pug'], #[span.cm-variable options]);
+            |
+            | #[span.cm-comment // Render the function]
+            | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable fn](#[span.cm-variable locals]);
+            | #[span.cm-comment // #{"=> '<string>of pug</string>'"}]
+
+    +methodName('pug.compileFile(path, ?options)')
+    p Compile a Pug template from a file to a function, which can be rendered multiple times with different locals.
+    dl.parameter-list
+        dt path#[span.type : string]
+        dd.description The path to a Pug file
+        dt options#[span.type : ?options]
+        dd.description An options object
+    dl.parameter-list.returns
+        dt returns#[span.type : function]
+        dd.description A function to generate the HTML from an object containing locals
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword var] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-comment // Complie a function]
+            | #[span.cm-keyword var] #[span.cm-def fn] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property compileFile](#[span.cm-string 'path to pug file'], #[span.cm-variable options]);
+            |
+            | #[span.cm-comment // Render the function]
+            | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable fn](#[span.cm-variable locals]);
+            | #[span.cm-comment // #{"=> '<string>of pug</string>'"}]
+
+    +methodName('pug.compileClient(source, ?options)')
+    p Compile a Pug template to a string of JavaScript, which can be used client side.
+    dl.parameter-list
+        dt source#[span.type : string]
+        dd.description The Pug template to compile
+        dt options#[span.type : ?options]
+        dd.description An options object
+    dl.parameter-list.returns
+        dt returns#[span.type : string]
+        dd.description A string of JavaScript representing a function
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword var] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-comment // Complie a function]
+            | #[span.cm-keyword var] #[span.cm-def fn] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property compileClient](#[span.cm-string 'string of pug'], #[span.cm-variable options]);
+            |
+            | #[span.cm-comment // Render the function]
+            | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable fn](#[span.cm-variable locals]);
+            | #[span.cm-comment // #{`=> 'function template(locals) { return "<string>of pug</string>"; }`}]
+
+    +methodName('pug.compileClientWithDependenciesTracked(source, ?options)')
+    p Same as 
+        code #[a(href="#pugcompilesource-options") compileClient]
+        | , except that this method returns an object of the form:
+    pre.cm-s-default
+        code
+            | {
+            |   #[span.cm-string 'body']: #[span.cm-string 'function (locals) {...}'],
+            |   #[span.cm-string 'dependencies']: [#[span.cm-string 'filename.pug']]
+            | }
+    p You should only use this method if you need #[code dependencies] to implement something like watching for changes to the Pug files.
+
+    +methodName('pug.compileFileClient(path, ?options)')
+    p Compile a Pug template file to a string of JavaScript that can be used client side.
+    dl.parameter-list
+        dt path#[span.type : string]
+        dd.description The path to a Pug file
+        dt options#[span.type : ?options]
+        dd.description An options object
+        dt options.name#[span.type : string]
+        dd.description If you pass a #[code .name] property on the options object, it will be used as the name of your client side template function.
+    dl.parameter-list.returns
+        dt returns#[span.type : string]
+        dd.description A JavaScript function body.
+    p First, our template file.
+    pre.cm-s-default
+        code
+            | #[span.cm-tag h1] #[span.cm-string This is a Pug template]
+            | #[span.cm-tag h2] #[span.cm-string By #{`#{author}`}]
+    p Then, we compile the Pug file into a function string.
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword var] #[span.cm-def fs] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'fs']);
+            | #[span.cm-keyword var] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-comment // Compile the template to a function string]
+            | #[span.cm-keyword var] #[span.cm-def jsFunctionString] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property compileFileClient](#[span.cm-string '/path/to/pugFile.pug'], {#[span.cm-property name]: #[span.cm-string "fancyTemplateFun"]});
+            |
+            | #[span.cm-comment // Maybe you want to compile all of your templates to a templates.js file and serve it to the client]
+            | #[span.cm-variable fs].#[span.cm-property writeFileSync](#[span.cm-string "templates.js"], #[span.cm-variable jsFunctionString]);
+    p Here's what the output function string looks like (written to #[code templates.js]).
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword function] #[span.cm-def fancyTemplataFun](#[span.cm-def locals]) {
+            |   #[span.cm-keyword var] #[span.cm-def buf] #[span.cm-operator =] [];
+            |   #[span.cm-keyword var] #[span.cm-def pug_mixins] #[span.cm-operator =] {};
+            |   #[span.cm-keyword var] #[span.cm-def pug_interp];
+            |
+            |   #[span.cm-keyword var] #[span.cm-def locals_for_with] #[span.cm-operator =] (#[span.cm-variable-2 locals] #[span.cm-operator |]#[span.cm-operator |] {});
+            |   
+            |   (#[span.cm-keyword function] (#[span.cm-def author]) {
+            |     #[span.cm-variable-2 buf].#[span.cm-property push](#[span.cm-string #{`"<h1>This is a Pug template</h1><h2>By "`}]
+            |       #[span.cm-operator +] (#[span.cm-variable pug].#[span.cm-property escape]((#[span.cm-variable-2 pug_interp] #[span.cm-operator =] #[span.cm-variable-2 author]) #[span.cm-operator ==] #[span.cm-atom null] #[span.cm-operator ?] #[span.cm-string ''] : #[span.cm-variable-2 pug_interp]))
+            |       #[span.cm-operator +] #[span.cm-string #{`"</h2>"`}]);
+            |   }.#[span.cm-property call](#[span.cm-keyword this], #[span.cm-string "author"] #[span.cm-keyword in] #[span.cm-variable-2 locals_for_with] #[span.cm-operator ?]
+            |     #[span.cm-variable-2 locals_for_with].#[span.cm-property author] : #[span.cm-keyword typeof] #[span.cm-variable author] #[span.cm-operator !==] #[span.cm-string "undefined"] #[span.cm-operator ?]
+            |       #[span.cm-variable author] : #[span.cm-atom undefined])
+            |   );
+            |
+            |   #[span.cm-keyword return] #[span.cm-variable-2 buf].#[span.cm-property join](#[span.cm-string ""]);
+            | }    
+    pre.cm-s-default
+        code
+            | #[span.cm-meta #{`<!DOCTYPE html>`}]
+            | #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag html]#[span.cm-tag.cm-bracket #{`>`}]
+            |   #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag head]#[span.cm-tag.cm-bracket #{`>`}]
+            |     #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag script] #[span.cm-attribute src]=#[span.cm-string "/templates.js"]#[span.cm-tag.cm-bracket #{`>`}]#[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /script]#[span.cm-tag.cm-bracket #{`>`}]
+            |   #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /head]#[span.cm-tag.cm-bracket #{`>`}]
+            |
+            |   #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag body]#[span.cm-tag.cm-bracket #{`>`}]
+            |     #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag h1]#[span.cm-tag.cm-bracket #{`>`}]This is one fancy template.#[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /h1]#[span.cm-tag.cm-bracket #{`>`}]
+            |
+            |     #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag script] #[span.cm-attribute type]=#[span.cm-string "type/javascript"]#[span.cm-tag.cm-bracket #{`>`}]
+            |       #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable window].#[span.cm-property fancyTemplateFun]({#[span.cm-property author]: #[span.cm-string "enlore"]});
+            |       #[span.cm-keyword var] #[span.cm-def div] #[span.cm-operator =] #[span.cm-variable document].#[span.cm-property createElemnt](#[span.cm-string "div"]);
+            |       #[span.cm-variable div].#[span.cm-property innerHTML] #[span.cm-operator =] #[span.cm-variable html];
+            |       #[span.cm-variable document].#[span.cm-property body].#[span.cm-property appendChild](#[span.cm-variable div]);
+            |     #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /script]#[span.cm-tag.cm-bracket #{`>`}]
+            |   #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /body]#[span.cm-tag.cm-bracket #{`>`}]
+            | #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /html]#[span.cm-tag.cm-bracket #{`>`}]
+
+    +methodName('pug.render(source, ?options, ?callback)')
+    dl.parameter-list
+        dt source#[span.type : string]
+        dd.description The source Pug template to render
+        dt options#[span.type : ?options]
+        dd.description An options object, also used as the locals object
+        dt callback#[span.type : ?function]
+        dd.description Node.js-style callback receiving the rendered results. #[strong This callback is called synchronously.]
+    dl.parameter-list.returns
+        dt returns#[span.type : string]
+        dd.description The resulting HTML string
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword var] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property render](#[span.cm-string 'string of pug'], #[span.cm-variable options]);
+            | #[span.cm-comment // #{"=> '<string>of pug</string>'"}]
+
+    +methodName('pug.renderFile(source, ?options, ?callback)')
+    dl.parameter-list
+        dt source#[span.type : string]
+        dd.description The path to the Pug file to render
+        dt options#[span.type : ?options]
+        dd.description An options object, also used as the locals object
+        dt callback#[span.type : ?function]
+        dd.description Node.js-style callback receiving the rendered results. #[strong This callback is called synchronously.]
+    dl.parameter-list.returns
+        dt returns#[span.type : string]
+        dd.description The resulting HTML string
+    pre.cm-s-default
+        code
+            | #[span.cm-keyword var] #[span.cm-def pug] #[span.cm-operator =] #[span.cm-variable require](#[span.cm-string 'pug']);
+            |
+            | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property renderFile](#[span.cm-string 'path/to/file.pug'], #[span.cm-variable options]);
+            | #[span.cm-comment // ...]
+    
+    +subHead(`Properties`)
+    +methodName(`pug.filters`)
+    p A hash table of #[a(href="../language/filters#custom-filters") custom filters].
+    p This object has the same semantics as the 
+        a(href="#options") #[code filters] option
+        | , but applies globally to all Pug compilation. When a filter is present in both #[code pug.filters] and #[code options.filters], 
+        | the #[code filters] option takes precedence.
+    div.alert.alert-warning
+        h6 Deprecated
+        p This property has been deprecated in favor of the 
+            a(href="#options") #[code filters] option</a>
+            | .
