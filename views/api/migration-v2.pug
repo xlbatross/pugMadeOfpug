@@ -1,0 +1,166 @@
+extend ../templete.pug
+
+block title
+    title Migrating to Pug 2 - Pug
+
+block content
+    h1 Migrating to Pug 2
+    p 
+        | Pug 2 was released in August 2016. To make improvements in the new release possible, 
+        | we had to make the decision of deprecating or removing some APIs and undocumented language features. 
+        | We made an effort to make these changes as unintrusive as possible, and many of these changes were previously discouraged in console warnings.
+
+    p This article details how you can convert your application to Pug v2 from Jade.
+
+    +anchor(`h2`,`Project Rename`)
+    p 
+        | Due to a trademark issue, the project name has been changed from “Jade” to “Pug” in conjunction with the release of Pug 2. 
+        | This also means that we have changed the official supported file extension from #[code .jade] to #[code .pug]. 
+        | Although #[code .jade] is still supported, it is deprecated. All users are encouraged to transition to #[code .pug] immediately.
+
+    +anchor(`h2`, `Removed Language Features`)
+    p 
+        | Most of these removals can be automatically detected by 
+        code #[a(href="https://www.npmjs.com/package/pug-lint") pug-lint]
+        | , our official linter.
+    
+    +anchor(`h3`,`Legacy Mixin Call`)
+    div.row
+        div.col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- old]
+                    |
+                    | #[span.cm-keyword mixin] #[span.cm-variable foo](#[span.cm-string 'whatever'])
+        div.col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- new]
+                    |
+                    | #[span.cm-variable +foo](#[span.cm-string 'whatever'])
+    p 
+        | We removed the legacy syntax for calling a #[a(href="../language/mixins.html") mixin] 
+        | to make it easier to differentiate between declarations and calls. (All uses of the old syntax caused warnings in Jade v1.)
+
+    +anchor(`h3`,`Attribute Interpolation`)
+    div.row
+        div.col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- old]
+                    |
+                    | #[span.cm-tag a]#[span.cm-punctuation (]#[span.cm-attribute href]#[span.cm-operator =]#[span.cm-string #{`'#{link}'`}]#[span.cm-punctuation )]
+                    |
+                    | #[span.cm-tag a]#[span.cm-punctuation (]#[span.cm-attribute href]#[span.cm-operator =]#[span.cm-string #{`'before#{link}after'`}]#[span.cm-punctuation )]
+        div.col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- new]
+                    |
+                    | #[span.cm-tag a]#[span.cm-punctuation (]#[span.cm-attribute href]#[span.cm-operator =]#[span.cm-variable link]#[span.cm-punctuation )]
+                    |
+                    | #[span.cm-comment //- (on Node.js/io.js ≥ 1.0.0)]
+                    | #[span.cm-tag a]#[span.cm-punctuation (]#[span.cm-attribute href]#[span.cm-operator =]#[span.cm-string-2 `before${]#[span.cm-variable link]#[span.cm-string-2 }after`]#[span.cm-punctuation )]
+                    | #[span.cm-comment //- (everywhere)]
+                    | #[span.cm-tag a]#[span.cm-punctuation (]#[span.cm-attribute href]#[span.cm-operator =]#[span.cm-string 'before'] #[span.cm-operator +] #[span.cm-variable link] #[span.cm-operator +] #[span.cm-string 'after']#[span.cm-punctuation )]
+    p 
+        | We removed support for interpolation in attributes since the implementation was unnecessarily complex, 
+        | and the feature tended to discourage users from learning that they can just use any JavaScript value in place of attributes. 
+        | Check our #[a(href="../language/attributes.html#attribute-interpolation") attribute documentation] for more information on attribute syntax.
+
+    +anchorInCode(`h3`, `Prefixed each Syntax`, [2])
+    div.row
+        div.col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- old]
+                    |
+                    | #[span.cm-keyword - each] #[span.cm-variable a] #[span.cm-keyword in] #[span.cm-variable b]
+                    | #[span.cm-indent   ]#[span.cm-operator =] #[span.cm-variable a]
+                    |
+                    | #[span.cm-keyword - for] #[span.cm-variable a] #[span.cm-keyword in] #[span.cm-variable b]
+                    | #[span.cm-indent   ]#[span.cm-operator =] #[span.cm-variable a]
+        div.col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- new]
+                    |
+                    | #[span.cm-keyword each] #[span.cm-variable a] #[span.cm-keyword in] #[span.cm-variable b]
+                    | #[span.cm-indent   ]#[span.cm-operator =] #[span.cm-variable a]
+                    |
+                    | #[span.cm-keyword for] #[span.cm-variable a] #[span.cm-keyword in] #[span.cm-variable b]
+                    | #[span.cm-indent   ]#[span.cm-operator =] #[span.cm-variable a]
+    p 
+        | #[code each] is not part of the JavaScript syntax, 
+        | so the use of #[code each] “keyword” in a JavaScript line is confusing as well as hackish (in terms of implementation). 
+        | The same applies to parentheses-less #[code for] keyword
+    p Simply remove #[code -] and your code should work again.
+
+    +anchor(`h2`,`Remove API`)
+    p These exported properties and compilation options have been removed. In your application, make sure you are not using these APIs.
+ 
+    +anchor(`h3`, `Properties`)
+    +anchorInCode(`h4`, `doctype`, [1])
+    p 
+        | Previously, the undocumented #[code jade.doctype] object contained a hash of 
+        a(href="../language/doctype.html#doctype-shortcuts") doctype shortcuts
+        | . By extending this object, users could create additional or modify existing doctype shortcuts.
+    p 
+        | In Pug v2, this object has been split from Pug into the 
+        code #[a(href="https://www.npmjs.com/package/doctypes") doctypes]
+        |  package. To extend doctype shortcuts, you could write a #[code codeGen] plugin.<!-- TODO -->
+    
+    +anchorInCode(`h4`, `nodes`, [1])
+    p
+        | Previously, the undocumented #[code jade.nodes] object held a hash of classes that serve as the constructor 
+        | of the nodes of the (also undocumented) Jade abstract syntax tree. In Pug v2, we have abandoned this approach 
+        | in favor of duck typing using the #[code type] property in AST nodes.
+    
+    +anchorInCode(`h4`, `selfclosing`, [1])
+    p
+        | Previously, the undocumented #[code jade.selfClosing] array could used to extend or modify the behavior of 
+        | #[a(href="../language/tags.html#self-closing-tags") self-closing tags].
+    p 
+        | In Pug v2, this array has been split from Pug into the 
+        code #[a(href="https://www.npmjs.com/package/void-elements") void-elements]
+        |  package. To modify this array, you could write a #[code codeGen] plugin.<!-- TODO -->
+
+    +anchorInCode(`h4`, `utils`, [1])
+    p Previously, the undocumented #[code jade.utils] object contained three functions that are useful for template engine internals.
+    p 
+        | #[code utils.merge] has been removed from Pug, as it is not used anymore. 
+        | Its functionality can be roughly replicated using the ES2015 
+        code #[a(href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign") Object.assign]
+        |  method, among other variants.
+    p 
+        | #[code utils.stringify] has been split from Pug into the 
+        code #[a(href="https://www.npmjs.com/package/js-stringify") js-stringify]
+        |  package, with additional protection against possible XSS attacks. All users are advised to use that package.
+    p 
+        | #[code utils.walkAST] has been split into the 
+        code #[a(href="https://www.npmjs.com/package/pug-walk") pug-walk]
+        |  package.
+
+    +anchorInCode(`h4`,`Compiler, Lexer, Parser`, [1, 2, 3])
+    p 
+        | Previously, the undocumented Jade #[code compiler], #[code lexer], and #[code parser] classes were exported through these properties. 
+        | Users were allowed to create their own compilers, lexers, and parsers that derive from these classes, in order to customize compilation behaviors.
+    p Pug v2 allows customization of the compilation process through plugins, and these exported properties are now removed.
+    p The Pug v2 equivalent of classes are now part of the 
+        code #[a(href="https://www.npmjs.com/package/pug-code-gen") pug-code-gen]
+        | , 
+        code #[a(href="https://www.npmjs.com/package/pug-lexer") pug-lexer]
+        | , and 
+        code #[a(href="https://www.npmjs.com/package/pug-parser") pug-parser]
+        |  packages, with various incompatible changes.
+    
+    +anchor(`h3`, `Options`)
+    +anchorInCode(`h4`,`compiler, lexer, parser`, [1, 2, 3])
+    p These options were used in conjunction with the removed 
+        a(href="#compiler-lexer-parser") #[code Compiler], #[code Lexer], and #[code Parser] classes
+    
+    +anchorInCode(`h4`,`client`, [1])
+    p
+        | The #[code client] option was used for client function compilation. It was deprecated in favor of the 
+        code #[a(href="reference.html#pugcompileclientsource-options") compileClient]
+        |  function in 2013 year, and its use has been warned against since then.

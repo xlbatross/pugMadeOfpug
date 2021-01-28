@@ -1,6 +1,20 @@
-mixin subHead(name)
-    - var urlName = name.toLowerCase().replace(' ', '-');
-    h2.subHead(id= urlName)= name + ` `
+mixin anchor(head, name)
+    - var urlName = name.toLowerCase().replace(/[\,]/g, '').replace(/[' ']/g, '-');
+    #{head}.subHead(id= urlName)= name + ` `
+        a.header-anchor(href=`#${urlName}`, aria-hidden=`true`) ¶
+
+mixin anchorInCode(head, name, number)
+    - var urlName = name.toLowerCase().replace(/[\,]/g, '').replace(/[' ']/g, '-');
+    - var arr = name.split(' ');
+    #{head}.subHead(id= urlName)
+        - var index = 0;
+        - for( var x = 0; x < arr.length; x++)
+            - if(x == number[index] - 1)
+                code #{arr[number[index] - 1]}
+                - index = index + 1;
+                |  
+            - else 
+                | #{arr[x] + ' '}
         a.header-anchor(href=`#${urlName}`, aria-hidden=`true`) ¶
 
 html(lang=`en`)

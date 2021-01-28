@@ -1,8 +1,8 @@
 extend ../templete.pug
 
-mixin methodName(name)
+mixin anchor_method(head, name)
     - var urlName = name.toLowerCase().replace(/[\(\)\.\,' ']/g, '').replace(/\?/g, '-');
-    h3.subHead(id= urlName)= name + ` `
+    #{head}.subHead(id= urlName)= name + ` `
         a.header-anchor(href=`#${urlName}`, aria-hidden=`true`) ¶
 
 block title
@@ -20,7 +20,7 @@ block content
             pre.cm-s-default
                 code #[span.cm-variable pug].#[span.cm-property render](#[span.cm-string 'p Hello world!']);
 
-    +subHead('Options')
+    +anchor('h2','Options')
     p All API methods accept the following set of options:
     dl.parameter-list
         dt filename#[span.type : string]
@@ -72,8 +72,8 @@ block content
         dd.description 
             | The name of the template function. Only applies to #[code compileClient] functions. Defaults to #[code 'template'].
 
-    +subHead('Methods')
-    +methodName('pug.compile(source, ?options)')
+    +anchor('h2', 'Methods')
+    +anchor_method('h3', 'pug.compile(source, ?options)')
     p Compile a Pug template to a function, which can be rendered multiple times with different locals.
     dl.parameter-list
         dt source#[span.type : string]
@@ -94,7 +94,7 @@ block content
             | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable fn](#[span.cm-variable locals]);
             | #[span.cm-comment // #{"=> '<string>of pug</string>'"}]
 
-    +methodName('pug.compileFile(path, ?options)')
+    +anchor_method('h3','pug.compileFile(path, ?options)')
     p Compile a Pug template from a file to a function, which can be rendered multiple times with different locals.
     dl.parameter-list
         dt path#[span.type : string]
@@ -115,7 +115,7 @@ block content
             | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable fn](#[span.cm-variable locals]);
             | #[span.cm-comment // #{"=> '<string>of pug</string>'"}]
 
-    +methodName('pug.compileClient(source, ?options)')
+    +anchor_method('h3','pug.compileClient(source, ?options)')
     p Compile a Pug template to a string of JavaScript, which can be used client side.
     dl.parameter-list
         dt source#[span.type : string]
@@ -136,7 +136,7 @@ block content
             | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable fn](#[span.cm-variable locals]);
             | #[span.cm-comment // #{`=> 'function template(locals) { return "<string>of pug</string>"; }`}]
 
-    +methodName('pug.compileClientWithDependenciesTracked(source, ?options)')
+    +anchor_method('h3','pug.compileClientWithDependenciesTracked(source, ?options)')
     p Same as 
         code #[a(href="#pugcompilesource-options") compileClient]
         | , except that this method returns an object of the form:
@@ -148,7 +148,7 @@ block content
             | }
     p You should only use this method if you need #[code dependencies] to implement something like watching for changes to the Pug files.
 
-    +methodName('pug.compileFileClient(path, ?options)')
+    +anchor_method('h3','pug.compileFileClient(path, ?options)')
     p Compile a Pug template file to a string of JavaScript that can be used client side.
     dl.parameter-list
         dt path#[span.type : string]
@@ -217,7 +217,7 @@ block content
             |   #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /body]#[span.cm-tag.cm-bracket #{`>`}]
             | #[span.cm-tag.cm-bracket #{`<`}]#[span.cm-tag /html]#[span.cm-tag.cm-bracket #{`>`}]
 
-    +methodName('pug.render(source, ?options, ?callback)')
+    +anchor_method('h3','pug.render(source, ?options, ?callback)')
     dl.parameter-list
         dt source#[span.type : string]
         dd.description The source Pug template to render
@@ -235,7 +235,7 @@ block content
             | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property render](#[span.cm-string 'string of pug'], #[span.cm-variable options]);
             | #[span.cm-comment // #{"=> '<string>of pug</string>'"}]
 
-    +methodName('pug.renderFile(source, ?options, ?callback)')
+    +anchor_method('h3','pug.renderFile(source, ?options, ?callback)')
     dl.parameter-list
         dt source#[span.type : string]
         dd.description The path to the Pug file to render
@@ -253,8 +253,8 @@ block content
             | #[span.cm-keyword var] #[span.cm-def html] #[span.cm-operator =] #[span.cm-variable pug].#[span.cm-property renderFile](#[span.cm-string 'path/to/file.pug'], #[span.cm-variable options]);
             | #[span.cm-comment // ...]
     
-    +subHead(`Properties`)
-    +methodName(`pug.filters`)
+    +anchor(`h2`,`Properties`)
+    +anchor_method(`h3`,`pug.filters`)
     p A hash table of #[a(href="../language/filters#custom-filters") custom filters].
     p This object has the same semantics as the 
         a(href="#options") #[code filters] option
