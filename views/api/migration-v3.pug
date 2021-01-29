@@ -1,0 +1,63 @@
+extend ../templete.pug
+
+block title
+    title Migrating to Pug 3 - Pug
+
+block content
+    h1 Migrating to Pug 3(from Pug 2)
+    p If you are migrating from Jade, please follow the #[a(href="migration-v2") Migrating to Pug 2] article first. This article covers how to upgrade from Pug 2 to Pug 3.
+    p For a complete list of new features, please refer to #[a(href="https://github.com/pugjs/pug/releases/tag/pug%403.0.0") the release notes]. What follows are instructions for dealing with breaking changes only.
+
+    +anchorInCode(`h2`, `filters with minify`, [3])
+    .alert.alert-warning
+        h6  Note
+        p If you are not using filters with the “minify” option, you can ignore this change.
+    p 
+        | If you were using filters that output JavaScript or CSS, along with the #[code minify] option, 
+        | you now need to include an extra dependency. If you want to support minifying JavaScript, you must install #[code jstransformer-uglify-js] 
+        | and if you want to support minifying CSS, you must install #[code jstransformer-clean-css].
+    
+    +anchorInCode(`h2`, `read plugins should now return Buffer`, [1, 6])
+    .alert.alert-warning
+        h6  Note
+        p If you are not using plugins, you can ignore this change.
+    p 
+        | If you are using a #[code read] plugin to override the way that pug reads files, 
+        | and you want to support the new #[code renderBuffer] filters, you will need to return #[code Buffer].
+    p e.g.
+    .row
+        .col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- old]
+                    |
+                    | #[span.cm-variable pug].#[span.cm-property renderFile](#[span.cm-variable filename], {
+                    |   #[span.cm-property plugins]: [
+                    |     {
+                    |       #[span.cm-property read]: (#[span.cm-def filename]) #[span.cm-operator #{`=>`}] {
+                    |         #[span.cm-comment // this returns a "string"]
+                    |         #[span.cm-keyword return] #[span.cm-variable fs].#[span.cm-property readFileSync](#[span.cm-variable-2 filename], #[span.cm-string 'utf8']);    
+                    |       },
+                    |     }    
+                    |   ]
+                    | })
+        .col-lg-6
+            pre.cm-s-default
+                code
+                    | #[span.cm-comment //- new]
+                    |
+                    | #[span.cm-variable pug].#[span.cm-property renderFile](#[span.cm-variable filename], {
+                    |   #[span.cm-property plugins]: [
+                    |     {
+                    |       #[span.cm-property read]: (#[span.cm-def filename]) #[span.cm-operator #{`=>`}] {
+                    |         #[span.cm-comment // this returns a "Buffer"]
+                    |         #[span.cm-keyword return] #[span.cm-variable fs].#[span.cm-property readFileSync](#[span.cm-variable-2 filename]);    
+                    |       },
+                    |     }    
+                    |   ]
+                    | }
+    
+    +anchor(`h2`, `Node.js Support`)
+    p We dropped support for node versions prior to 10.0.0. We recommend upgrading all projects using pug to node.js 12, but we will support 10 until April 2021.
+    p In future we may drop support for node versions #[a(href="https://github.com/nodejs/Release") when they reach end of life] without a major version bump.
+    

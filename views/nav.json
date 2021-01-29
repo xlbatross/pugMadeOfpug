@@ -2,7 +2,7 @@
     "category" : ["api", "language", "support"],
     "categoryText" : ["API", "Language Reference", "Support"],
     "article" : [
-      ["getting-started", "express", "reference", "migration-v2", "migration-v3", "react-integration"],
+      ["getting-started", "express", "reference", "migration-v2", "migration-v3", "integration"],
       ["attributes", "case", "code", "comments", "conditionals", "doctype", "filters", "includes", "inheritance", "interpolation", "iteration", "mixins", "plain-text", "tags"],
       ["community", "enterprise"]
     ], 

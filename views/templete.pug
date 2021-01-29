@@ -1,10 +1,10 @@
 mixin anchor(head, name)
-    - var urlName = name.toLowerCase().replace(/[\,]/g, '').replace(/[' ']/g, '-');
+    - var urlName = name.toLowerCase().replace(/[\,\.]/g, '').replace(/[' ']/g, '-');
     #{head}.subHead(id= urlName)= name + ` `
         a.header-anchor(href=`#${urlName}`, aria-hidden=`true`) ¶
 
 mixin anchorInCode(head, name, number)
-    - var urlName = name.toLowerCase().replace(/[\,]/g, '').replace(/[' ']/g, '-');
+    - var urlName = name.toLowerCase().replace(/[\,\.]/g, '').replace(/[' ']/g, '-');
     - var arr = name.split(' ');
     #{head}.subHead(id= urlName)
         - var index = 0;

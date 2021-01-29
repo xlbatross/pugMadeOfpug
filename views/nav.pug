@@ -6,8 +6,11 @@ mixin navList(data)
                 if at == article
                     a.nav-link.active(href=`/${ct}/${at}`)= navData.articleText[ctIndex][atIndex]
                 else
-                    a.nav-link(href=`/${ct}/${at}`)= navData.articleText[ctIndex][atIndex]
-                
+                    if at == 'integration'
+                        a.nav-link(href=`https://github.com/pugjs/babel-plugin-transform-react-pug`)= navData.articleText[ctIndex][atIndex]
+                    else
+                        a.nav-link(href=`/${ct}/${at}`)= navData.articleText[ctIndex][atIndex]
+                        
 nav.nav.nav-pills.nav-stacked
     div.advert
     +navList(navData)
